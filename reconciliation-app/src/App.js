@@ -58,7 +58,7 @@ function App() {
     <div className="d-flex min-vh-100">
       {/* Sidebar */}
       <div className="bg-dark text-white p-3" style={{ width: '250px' }}>
-        <h4 className="mb-4">MyBusiness</h4>
+        <h4 className="mb-4">Terassen Limited</h4>
         <ul className="nav flex-column">
           <li className="nav-item">
             <a className="nav-link text-white" href="#">Dashboard</a>
