@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function App() {
   // Logged-in user
-  const [user] = useState({ name: 'John Doe' });
+  const [user] = useState({ name: 'King George' });
 
   // Modes (row titles)
   const modes = ["Cash", "Cheque", "Mpesa", "Visa"];
@@ -12,38 +12,39 @@ function App() {
   // Setup state
   const [formData, setFormData] = useState(
     modes.reduce((acc, mode) => {
-      acc[mode] = { pos: 0, banked: 0, explanation: "" };
+      acc[mode] = { pos: "", banked: "", explanation: "" };
       return acc;
     }, {})
   );
 
   // Handle change
   const handleChange = (e, mode, field) => {
-    const value = field === "explanation" ? e.target.value : parseFloat(e.target.value || 0);
+  const value = field === "explanation" ? e.target.value : e.target.value === "" ? "" : parseFloat(e.target.value);
 
-    setFormData(prev => ({
-      ...prev,
-      [mode]: {
-        ...prev[mode],
-        [field]: value,
-      },
-    }));
-  };
+  setFormData((prev) => ({
+    ...prev,
+    [mode]: {
+      ...prev[mode],
+      [field]: value,
+    },
+  }));
+};
+
 
   // Calculate variance
   const getVariance = (mode) => {
-    return (formData[mode].pos || 0) - (formData[mode].banked || 0);
-  };
+  const pos = parseFloat(formData[mode].pos) || 0;
+  const banked = parseFloat(formData[mode].banked) || 0;
+  return pos - banked;
+};
 
   // Sum fields
-  const getTotal = (field) => {
-    return modes.reduce((sum, mode) => sum + (formData[mode][field] || 0), 0);
-  };
+  const getTotal = (field) =>
+  modes.reduce((acc, mode) => acc + (parseFloat(formData[mode][field]) || 0), 0);
 
   // Total variance
-  const getTotalVariance = () => {
-    return modes.reduce((sum, mode) => sum + getVariance(mode), 0);
-  };
+  const getTotalVariance = () =>
+  modes.reduce((acc, mode) => acc + getVariance(mode), 0);
 
   // Handle submit
   const handleSubmit = (e) => {
