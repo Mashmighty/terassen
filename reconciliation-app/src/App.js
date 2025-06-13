@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import React, { useState } from 'react';
-import Login from './Login';
+import Login from './login';
 
 function App() {
   const [user, setUser] = useState(null);
