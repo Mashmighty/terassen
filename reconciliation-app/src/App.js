@@ -53,6 +53,16 @@ function App() {
   if (!user) {
     return <Login onLogin={setUser} />;
   }
+//logout
+const handleLogout = () => {
+  // Optional: sign out from Firebase if you're using it
+  if (window.firebase?.auth) {
+    window.firebase.auth().signOut().catch(console.error);
+  }
+
+  // Clear the local user
+  setUser(null);
+};
 
   // 👇 Main App View
   return (
@@ -78,6 +88,7 @@ function App() {
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Reconciliation</h2>
           <span className="text-muted">Welcome, {user.email}</span>
+  <button className="btn btn-outline-danger btn-sm" onClick={() => handleLogout()}>Logout</button>
         </div>
 
         {/* Reconciliation Form */}
