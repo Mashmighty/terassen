@@ -98,6 +98,17 @@ const handleLogout = () => {
 
         {/* Reconciliation Form */}
         <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+  <label htmlFor="reportDate" className="form-label fw-bold">Report Date:</label>
+  <input
+    type="date"
+    id="reportDate"
+    className="form-control"
+    value={reportDate}
+    onChange={(e) => setReportDate(e.target.value)}
+  />
+</div>
+
           <table className="table table-bordered">
             <thead className="table-light">
               <tr>
