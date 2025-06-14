@@ -1,3 +1,4 @@
+import Dashboard from "./dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import React, { useState } from 'react';
@@ -5,7 +6,7 @@ import Login from './login';
 
 function App() {
   const [user, setUser] = useState(null);
-
+  const [currentPage, setCurrentPage] = useState("reconciliation");
   const modes = ["Cash", "Cheque", "Mpesa", "Visa"];
 
   const [formData, setFormData] = useState(
@@ -77,13 +78,19 @@ const handleLogout = () => {
         <h4 className="mb-4">Terassen Limited</h4>
         <ul className="nav flex-column">
           <li className="nav-item">
-            <a className="nav-link text-white" href="#">Dashboard</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link active bg-primary text-white" href="#">Reconciliation</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link text-white" href="#">Shift Management</a>
+    <button className={`nav-link btn btn-link text-start w-100 text-white ${currentPage === "dashboard" ? "bg-primary" : ""}`} onClick={() => setCurrentPage("dashboard")}>
+      Dashboard
+    </button>
+  </li>
+  <li className="nav-item">
+    <button className={`nav-link btn btn-link text-start w-100 text-white ${currentPage === "reconciliation" ? "bg-primary" : ""}`} onClick={() => setCurrentPage("reconciliation")}>
+      Reconciliation
+    </button>
+  </li>
+  <li className="nav-item">
+    <button className="nav-link btn btn-link text-start w-100 text-white" disabled>
+      Shift Management
+    </button>
           </li>
         </ul>
       </div>
