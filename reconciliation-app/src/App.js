@@ -14,6 +14,11 @@ function App() {
       return acc;
     }, {})
   );
+   // Date state for the report
+  const [reportDate, setReportDate] = useState(() => {
+    const today = new Date().toISOString().split("T")[0];
+    return today;
+  });
 
   const handleChange = (e, mode, field) => {
     const value = field === "explanation"
