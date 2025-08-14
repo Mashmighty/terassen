@@ -4,6 +4,16 @@ import './App.css';
 import React, { useState } from 'react';
 import Login from './login';
 
+// ----- utils -----
+const formatDate = (value) => {
+  if (!value) return "";
+  // normalize to yyyy-mm-dd (safe for <input type="date"> and display)
+  const d = new Date(value);
+  const tzOffset = d.getTimezoneOffset(); // avoid off-by-one with local tz
+  const local = new Date(d.getTime() - tzOffset * 60 * 1000);
+  return local.toISOString().slice(0, 10);
+};
+
 function App() {
   const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState("reconciliation");
