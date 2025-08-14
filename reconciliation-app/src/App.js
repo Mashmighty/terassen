@@ -98,9 +98,120 @@ const handleLogout = () => {
       {/* Main Content */}
       <div className="flex-grow-1 p-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>Reconciliation</h2>
-          <span className="text-muted">Welcome, {user.email}</span>
-  <button className="btn btn-outline-danger btn-sm" onClick={() => handleLogout()}>Logout</button>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+      {currentPage === "dashboard" ? "Dashboard" : `Reconciliation - ${formatDate(reportDate)}`}
+    </h2>
+    <div>
+      <span className="me-3 text-muted">Welcome, {user.email}</span>
+      <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
+  </div>
+
+  {currentPage === "dashboard" ? (
+    <div className="text-center mt-5">
+      <h4>Total Banked Amount</h4>
+      <p className="display-4 fw-bold text-success">Ksh {getTotal("banked").toFixed(2)}</p>
+    </div>
+  ) : (
+    <>
+      <div className="mb-3">
+        <label htmlFor="reportDate" className="form-label fw-bold">Report Date:</label>
+        <input
+          type="date"
+          id="reportDate"
+          className="form-control"
+          value={reportDate}
+          onChange={(e) => setReportDate(e.target.value)}
+        />
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <table className="table table-bordered">
+          <thead className="table-light">
+            <tr>
+              <th>Mode</th>
+              <th>POS Report</th>
+              <th>Banked</th>
+              <th>Variance</th>
+              <th>Explanation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modes.map((mode, index) => (
+              <tr key={index}>
+                <td>{mode}</td>
+                <td>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={formData[mode].pos}
+                    onChange={(e) => handleChange(e, mode, "pos")}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={formData[mode].banked}
+                    onChange={(e) => handleChange(e, mode, "banked")}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={getVariance(mode).toFixed(2)}
+                    readOnly
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={formData[mode].explanation}
+                    onChange={(e) => handleChange(e, mode, "explanation")}
+                  />
+                </td>
+              </tr>
+            ))}
+
+            <tr className="fw-bold">
+              <td>Total</td>
+              <td>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={getTotal("pos").toFixed(2)}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={getTotal("banked").toFixed(2)}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={getTotalVariance().toFixed(2)}
+                  readOnly
+                />
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="submit" className="btn btn-success mt-3">Submit Report</button>
+      </form>
+    </>
+  )}
         </div>
 
         {/* Reconciliation Form */}
